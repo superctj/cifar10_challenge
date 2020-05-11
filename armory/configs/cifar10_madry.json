@@ -1,13 +1,15 @@
 {
-    "_description": "CIFAR10 Image Classification",
+    "_description": "CIFAR10 Madry Attempt",
     "adhoc": null,
     "attack": {
         "knowledge": "white",
         "kwargs": {
-            "eps": 0.2
+            "eps": 8,
+            "eps_step": 2,
+            "max_iter": 20
         },
         "module": "art.attacks",
-        "name": "FastGradientMethod"
+        "name": "ProjectedGradientDescent"
     },
     "dataset": {
         "batch_size": 64,
@@ -27,11 +29,11 @@
         "fit": false,
         "fit_kwargs": {},
         "model_kwargs": {
-            "input_shape": [3, 32, 32]
+            "input_shape": [32, 32, 3]
         },
         "module": "arch.wrapper",
-        "name": "get_wideresnet",
-        "weights_file": "cifar10-atta.ckpt",
+        "name": "get_madry_model",
+        "weights_file": "adv_trained",
         "wrapper_kwargs": {}
     },
     "scenario": {
@@ -40,7 +42,7 @@
         "name": "ImageClassificationTask"
     },
     "sysconfig": {
-        "docker_image": "twosixarmory/pytorch:0.6.0",
+        "docker_image": "twosixarmory/tf1:0.6.0",
         "external_github_repo": null,
         "gpus": "0",
         "use_gpu": true
