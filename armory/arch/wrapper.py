@@ -7,7 +7,7 @@ import os
 import numpy as np
 import tensorflow as tf
 from armory import paths
-from art.classifiers import TensorFlowClassifier
+from art.classifiers import TFClassifier
 
 from arch.model import make_madry_model
 
@@ -23,6 +23,10 @@ def preprocessing_fn(img):
 
 def get_madry_model(model_kwargs, wrapper_kwargs, weights_file=None):
     model = make_madry_model(**model_kwargs)
+    input_ph = tf.placeholder(tf.float32, shape=[None, 32, 32, 3])
+    labels_ph = tf.placeholder(tf.int64, shape=[None, 10])
+    training_ph = tf.placeholder(tf.bool, shape=())
+
     saver = tf.train.Saver()
     tf_sess = tf.Session()
 
@@ -32,11 +36,12 @@ def get_madry_model(model_kwargs, wrapper_kwargs, weights_file=None):
     model_file = tf.train.latest_checkpoint(filepath)
     saver.restore(tf_sess, model_file)
 
-    wrapped_model = TensorFlowClassifier(
-        input_ph=tf.placeholder(tf.float32, shape=[None, 32, 32, 3]),
+    wrapped_model = TFClassifier(
+        input_ph=input_ph,
         output=model.pre_softmax,
-        labels_ph=tf.placeholder(tf.int64, shape=[None, 10]),
+        labels_ph=labels_ph,
         loss=model.xent,
+        learning=training_ph,
         sess=tf_sess,
         clip_values=(0, 255),
         **wrapper_kwargs

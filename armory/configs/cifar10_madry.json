@@ -6,7 +6,8 @@
         "kwargs": {
             "eps": 8,
             "eps_step": 2,
-            "max_iter": 20
+            "max_iter": 20,
+            "num_random_init": 1
         },
         "module": "art.attacks",
         "name": "ProjectedGradientDescent"
