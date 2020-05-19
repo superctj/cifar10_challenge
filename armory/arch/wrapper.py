@@ -23,8 +23,8 @@ def preprocessing_fn(img):
 
 def get_madry_model(model_kwargs, wrapper_kwargs, weights_file=None):
     model = make_madry_model(**model_kwargs)
-    input_ph = tf.placeholder(tf.float32, shape=[None, 32, 32, 3])
-    labels_ph = tf.placeholder(tf.int64, shape=[None, 10])
+    input_ph = model.x_input
+    labels_ph = model.y_input
     training_ph = tf.placeholder(tf.bool, shape=())
 
     saver = tf.train.Saver()
