@@ -34,7 +34,7 @@ class Model(object):
         tf.float32,
         shape=[None, 32, 32, 3])
 
-      self.y_input = tf.placeholder(tf.int64, shape=None)
+      self.y_input = tf.placeholder(tf.int64, shape=[None])
 
 
       input_standardized = tf.map_fn(lambda img: tf.image.per_image_standardization(img),
