@@ -1,6 +1,7 @@
 """
-Wide-Resnet-34 Classifier for 32x32x3 CIFAR-10 Image Classification.
-Reference: https://github.com/twosixlabs/armory/blob/master/armory/baseline_models/pytorch/cifar.py
+Tensorflow1 model wrapper for Image classification on CIFAR10
+
+Contributed by: Tianji Cong, University of Michigan
 """
 import os
 
@@ -13,10 +14,7 @@ from arch.model import make_madry_model
 
 
 def preprocessing_fn(img):
-    # img = img.astype(np.float32) / 255.0
-    # img = img.transpose(0, 3, 1, 2)  # from NHWC to NCHW
     img = img.astype(np.float32)
-    # print(img.shape)
 
     return img
 
@@ -27,10 +25,10 @@ def get_madry_model(model_kwargs, wrapper_kwargs, weights_file=None):
     labels_ph = model.y_input
     training_ph = tf.placeholder(tf.bool, shape=())
 
+    # Restore the checkpoint
     saver = tf.train.Saver()
     tf_sess = tf.Session()
 
-    # Restore the checkpoint
     saved_model_dir = paths.DockerPaths().saved_model_dir
     filepath = os.path.join(saved_model_dir, weights_file)
     model_file = tf.train.latest_checkpoint(filepath)

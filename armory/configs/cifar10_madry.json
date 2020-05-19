@@ -1,5 +1,5 @@
 {
-    "_description": "CIFAR10 Madry Attempt",
+    "_description": "CIFAR10 Image Classification, contributed by Tianji Cong, University of Michigan",
     "adhoc": null,
     "attack": {
         "knowledge": "white",
@@ -30,7 +30,11 @@
         "fit": false,
         "fit_kwargs": {},
         "model_kwargs": {
-            "input_shape": [32, 32, 3]
+            "input_shape": [
+                32,
+                32,
+                3
+            ]
         },
         "module": "arch.wrapper",
         "name": "get_madry_model",
